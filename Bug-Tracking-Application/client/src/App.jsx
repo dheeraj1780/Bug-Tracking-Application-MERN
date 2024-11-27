@@ -22,6 +22,16 @@ import {
 } from "./pages";
 
 import { action as loginAction } from "./pages/Login";
+import { action as userAction } from "./pages/Users/Users";
+import { loader as dashboardLoader } from "./pages/Dashboard";
+
+export const checkDefaultTheme = () => {
+  const isDarkTheme = localStorage.getItem("darkTheme") === "true";
+  document.body.classList.toggle("dark-theme", isDarkTheme);
+  return isDarkTheme;
+};
+
+checkDefaultTheme();
 
 const router = createBrowserRouter([
   {
@@ -41,6 +51,7 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,
@@ -49,6 +60,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+            // action: profileAction,
           },
           {
             path: "users",
@@ -57,6 +69,7 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <Users />,
+                action: userAction,
               },
               {
                 path: "registerUser",

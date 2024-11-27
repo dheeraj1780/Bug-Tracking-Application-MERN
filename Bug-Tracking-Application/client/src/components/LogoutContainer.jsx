@@ -1,11 +1,11 @@
 import { FaUserCircle, FaCaretDown } from "react-icons/fa";
+import { useDashboardContext } from "../pages/Dashboard";
 import Wrapper from "../assets/wrappers/LogoutContainer";
 import { useState } from "react";
 
 const LogoutContainer = () => {
   const [showLogout, setShowLogout] = useState(false);
-
-  const logoutUser = async () => {};
+  const { logoutUser } = useDashboardContext();
   return (
     <Wrapper>
       <button
@@ -17,7 +17,7 @@ const LogoutContainer = () => {
         <FaCaretDown />
       </button>
       <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-        <button type="button" className="dropdown-btn">
+        <button type="button" className="dropdown-btn" onClick={logoutUser}>
           logout
         </button>
       </div>

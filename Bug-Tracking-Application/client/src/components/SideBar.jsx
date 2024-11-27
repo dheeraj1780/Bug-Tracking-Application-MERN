@@ -1,0 +1,27 @@
+import { FaTimes } from "react-icons/fa";
+import Wrapper from "../assets/wrappers/Sidebar";
+import NavLinks from "./NavLinks";
+import { useDashboardContext } from "../pages/Dashboard";
+const Sidebar = () => {
+  const { showSidebar, toggleSidebar } = useDashboardContext();
+  return (
+    <Wrapper>
+      <div
+        className={
+          showSidebar ? "sidebar-container show-sidebar" : "sidebar-container"
+        }
+      >
+        <div className="content">
+          {/* <button type="button" className="close-btn" onClick={toggleSidebar}>
+            <FaTimes />
+          </button> */}
+          {/* <header>
+            <Logo />
+          </header> */}
+          <NavLinks />
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
+export default Sidebar;
