@@ -1,28 +1,10 @@
 import Wrapper from "../../assets/wrappers/Users";
-import { useNavigate } from "react-router-dom";
-import customFetch from "../../utils/customFetch";
-
-export const action = async () => {
-  try {
-    const { users } = await customFetch.get("/users/users", data);
-    console.log(users);
-    return users;
-  } catch (error) {
-    return redirect("/");
-  }
-};
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 const Users = () => {
-  console.log("hi this is user bar ");
+  const { details } = useOutletContext();
+  console.log(details);
   const navigate = useNavigate();
-
-  // Example user data (this should come from a database or state)
-  const users = [
-    { id: 1, name: "John Doe", username: "johndoe", role: "Admin" },
-    { id: 2, name: "Jane Smith", username: "janesmith", role: "User" },
-    { id: 3, name: "Sam Wilson", username: "samwilson", role: "Editor" },
-  ];
-
   const handleRowClick = (id) => {
     navigate(`/dashboard/users/viewUser?id=${id}`);
   };
@@ -51,20 +33,26 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user.id} onClick={() => handleRowClick(user.id)}>
-                <td>
-                  <div className="user-row">
-                    <div className="profile-icon">
-                      {user.name.charAt(0).toUpperCase()}
+            {details && details.length > 0 ? (
+              details.map((user) => (
+                <tr key={user._id} onClick={() => handleRowClick(user._id)}>
+                  <td>
+                    <div className="user-row">
+                      <div className="profile-icon">
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.role}</td>
+                  </td>
+                  <td>{user.name}</td>
+                  <td>{user.username}</td>
+                  <td>{user.role}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No users found</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

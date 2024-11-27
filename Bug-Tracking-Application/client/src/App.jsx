@@ -22,7 +22,7 @@ import {
 } from "./pages";
 
 import { action as loginAction } from "./pages/Login";
-import { action as userAction } from "./pages/Users/Users";
+import { loader as userLoader } from "./pages/Users/UsersLayout";
 import { loader as dashboardLoader } from "./pages/Dashboard";
 
 export const checkDefaultTheme = () => {
@@ -65,11 +65,11 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: <UsersLayout />,
+            loader: userLoader,
             children: [
               {
                 index: true,
                 element: <Users />,
-                action: userAction,
               },
               {
                 path: "registerUser",
