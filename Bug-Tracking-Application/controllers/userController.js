@@ -8,7 +8,7 @@ export const getCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
 
-export const updateUser = async (req, res) => {
+export const updateLoggedUser = async (req, res) => {
   const obj = { ...req.body };
   delete obj.password;
   const updatedUser = await User.findByIdAndUpdate(req.user.userId, obj);
@@ -23,6 +23,21 @@ export const deleteUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   const users = await User.find();
   res.status(StatusCodes.OK).json({ users });
+};
+
+// Get a specific bug by ID
+export const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  res.status(StatusCodes.OK).json({ user });
+};
+
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+  res.status(StatusCodes.OK).json({ user: updatedUser });
 };
 
 export const register = async (req, res) => {

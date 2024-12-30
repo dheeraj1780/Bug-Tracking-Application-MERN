@@ -6,7 +6,7 @@ const Wrapper = styled.section`
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f4f7fc;
+    background-color: var(--primary-700);
     padding: 2rem;
   }
 

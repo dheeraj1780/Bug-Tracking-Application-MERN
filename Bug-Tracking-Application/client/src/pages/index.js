@@ -9,7 +9,6 @@ export { default as UsersLayout } from "./Users/UsersLayout.jsx";
 export { default as Users } from "./Users/Users.jsx";
 export { default as RegisterUser } from "./Users/RegisterUser.jsx";
 export { default as ViewUser } from "./Users/ViewUser.jsx";
-export { default as DeleteUser } from "./Users/DeleteUser.jsx";
 export { default as ReportsLayout } from "./Reports/ReportsLayout.jsx";
 export { default as Reports } from "./Reports/Reports.jsx";
 export { default as RegisterReports } from "./Reports/RegisterReports.jsx";

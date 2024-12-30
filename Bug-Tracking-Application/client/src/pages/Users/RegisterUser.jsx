@@ -1,13 +1,39 @@
-import { useState } from "react";
+import {
+  Form,
+  redirect,
+  useNavigation,
+  Link,
+  useActionData,
+} from "react-router-dom";
+import { toast } from "react-toastify";
 import cryptoRandomString from "crypto-random-string"; // Import the library
 import Wrapper from "../../assets/wrappers/RegisterUser";
+import { useState } from "react";
+import { FormRow } from "../../components";
+import customFetch from "../../utils/customFetch";
+
+//this is he action method for registering user
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    await customFetch.post("/users/register", data);
+    toast.success("Registration successful");
+    return redirect("/dashboard/users");
+  } catch (error) {
+    console.log(error);
+    toast.error(error?.response?.data?.message);
+    return error;
+  }
+};
 
 const RegisterUser = () => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
-  const [password, setPassword] = useState("");
+  const errors = useActionData();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
+  const [password, setPassword] = useState("");
   // Use crypto-random-string to generate password
   const generatePassword = () => {
     const generatedPassword = cryptoRandomString({
@@ -17,39 +43,26 @@ const RegisterUser = () => {
     setPassword(generatedPassword);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ name, username, password, role });
-  };
-
   return (
     <Wrapper>
       <div className="register-page">
         <h1>Create New User</h1>
-        <form onSubmit={handleSubmit} className="register-form">
+        <Form method="post" className="register-form">
           <div className="form-group">
-            <label htmlFor="name">Full Name</label>
-            <input
+            <FormRow
               type="text"
-              id="name"
               name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              placeholder="Enter user's full name"
+              labelText="name"
+              placeholder="Name"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
+            <FormRow
+              type="email"
               name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              placeholder="Enter username"
+              labelText="username"
+              placeholder="Username"
             />
           </div>
 
@@ -57,7 +70,6 @@ const RegisterUser = () => {
             <label htmlFor="password">Password</label>
             <input
               type="text"
-              id="password"
               name="password"
               value={password}
               readOnly
@@ -74,24 +86,19 @@ const RegisterUser = () => {
 
           <div className="form-group">
             <label htmlFor="role">Role</label>
-            <select
-              id="role"
-              name="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            >
+            <select name="role" required>
               <option value="">Select Role</option>
+              <option value="tester">Tester</option>
+              <option value="developer">Developer</option>
+              <option value="incharge">Incharge</option>
               <option value="admin">Admin</option>
-              <option value="user">User</option>
-              <option value="moderator">Moderator</option>
             </select>
           </div>
-
-          <button type="submit" className="submit-btn">
-            Register User
+          {errors && <p style={{ color: "red" }}>{errors.msg}</p>}
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? "submitting..." : "Register"}
           </button>
-        </form>
+        </Form>
       </div>
     </Wrapper>
   );

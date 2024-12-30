@@ -22,7 +22,10 @@ import {
 } from "./pages";
 
 import { action as loginAction } from "./pages/Login";
-import { loader as userLoader } from "./pages/Users/UsersLayout";
+import { action as deleteUserAction } from "./pages/Users/DeleteUser";
+import { action as userRegisterAction } from "./pages/Users/RegisterUser";
+import { loader as usersLoader } from "./pages/Users/UsersLayout";
+import { loader as userLoader } from "./pages/Users/ViewUser";
 import { loader as dashboardLoader } from "./pages/Dashboard";
 
 export const checkDefaultTheme = () => {
@@ -65,7 +68,7 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: <UsersLayout />,
-            loader: userLoader,
+            loader: usersLoader,
             children: [
               {
                 index: true,
@@ -74,10 +77,16 @@ const router = createBrowserRouter([
               {
                 path: "registerUser",
                 element: <RegisterUser />,
+                action: userRegisterAction,
               },
               {
-                path: "viewUser",
+                path: "viewUser/:id",
                 element: <ViewUser />,
+                loader: userLoader,
+              },
+              {
+                path: "deleteUser/:id",
+                action: deleteUserAction,
               },
             ],
           },

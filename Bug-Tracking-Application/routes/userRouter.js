@@ -11,9 +11,11 @@ import {
 import {
   deleteUser,
   getCurrentUser,
-  updateUser,
+  updateLoggedUser,
   getAllUsers,
   register,
+  updateUser,
+  getUserById,
 } from "../controllers/userController.js";
 
 const router = Router();
@@ -23,7 +25,7 @@ router
   .post(requireRole("admin"), validateUserInput, register);
 
 router.route("/users").get(requireRole(["admin", "incharge"]), getAllUsers);
-
+router.route("/users/:id").get(requireRole("admin"), getUserById);
 router
   .route("/current-user")
   .get(
@@ -31,8 +33,8 @@ router
     getCurrentUser
   );
 router
-  .route("admin/update-user")
-  .patch(requireRole("admin"), validateUserUpdateInput, updateUser);
+  .route("admin/update-logged-user")
+  .patch(requireRole("admin"), validateUserUpdateInput, updateLoggedUser);
 router
   .route("admin/delete-user/:id")
   .delete(
@@ -41,5 +43,9 @@ router
     preventAdminDelete,
     deleteUser
   );
+
+router
+  .route("admin/update-user")
+  .patch(requireRole("admin"), validateUserUpdateInput, updateUser);
 
 export default router;

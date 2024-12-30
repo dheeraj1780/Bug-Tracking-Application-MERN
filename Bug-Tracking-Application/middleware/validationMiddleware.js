@@ -32,8 +32,6 @@ export const validateUserInput = withValidationErrors([
   body("name")
     .notEmpty()
     .withMessage("Name is required")
-    .isEmail()
-    .withMessage("Username must be a valid email address")
     .isLength({ min: 3 })
     .withMessage("Name must be at least 3 characters long"),
   body("username")
@@ -41,6 +39,8 @@ export const validateUserInput = withValidationErrors([
     .withMessage("Username is required")
     .isLength({ min: 4 })
     .withMessage("Username must be at least 4 characters long")
+    .isEmail()
+    .withMessage("Username must be a valid email address")
     .custom(async (value) => {
       const userExists = await User.findOne({ username: value });
       if (userExists) throw new BadRequestError("Username already exists");

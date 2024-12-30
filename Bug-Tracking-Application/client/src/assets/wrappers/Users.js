@@ -4,7 +4,7 @@ const Wrapper = styled.section`
   .users-page {
     min-height: 100vh;
     padding: 2rem;
-    background-color: var(--background-color); /* Dynamic background */
+    background-color: var(--primary-700); /* Dynamic background */
     display: flex;
     flex-direction: column;
     align-items: flex-start;

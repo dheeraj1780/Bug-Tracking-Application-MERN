@@ -6,7 +6,7 @@ const Users = () => {
   console.log(details);
   const navigate = useNavigate();
   const handleRowClick = (id) => {
-    navigate(`/dashboard/users/viewUser?id=${id}`);
+    navigate(`/dashboard/users/viewUser/${id}`);
   };
 
   const handleRegisterClick = () => {

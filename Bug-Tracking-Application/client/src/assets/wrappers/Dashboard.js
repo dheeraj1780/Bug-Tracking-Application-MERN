@@ -4,6 +4,7 @@ const Wrapper = styled.section`
   .dashboard {
     display: grid;
     grid-template-columns: 1fr;
+    background-color: var(--primary-700);
   }
   .dashboard-page {
     width: 90vw;

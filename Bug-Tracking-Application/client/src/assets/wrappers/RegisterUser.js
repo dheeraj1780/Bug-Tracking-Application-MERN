@@ -4,7 +4,7 @@ const Wrapper = styled.section`
   .register-page {
     min-height: 100vh;
     padding: 3rem;
-    background-color: var(--primary-500); /* Light/Dark Mode background */
+    background-color: var(--primary-700); /* Light/Dark Mode background */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,7 +45,7 @@ const Wrapper = styled.section`
     font-size: 1rem;
     border: 1px solid var(--grey-300);
     border-radius: var(--border-radius);
-    background-color: var(--background-input-color);
+    background-color: var(--background-color);
     color: var(--text-color);
   }
 
